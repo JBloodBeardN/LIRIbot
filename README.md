@@ -15,6 +15,9 @@ The file is also run through node and git bash terminal. Uses a spotify API node
   * Bands
   * Musical Artists
   
+  NOTE: You are able to use strings with spaces for artists and bands
+  * example: node liri spotify-this-song Through the fire and the flames
+  
   1. Use movie-this and a movie title to search OMDB API for movie information
   * example: https://github.com/JBloodBeardN/LIRIbot/blob/master/gifs/2bd785e87a90468a6b8eaa29dde52262.gif
   * example: https://github.com/JBloodBeardN/LIRIbot/blob/master/gifs/d7b32bdc7f2649edbad695345c2aa56d.gif
@@ -28,6 +31,6 @@ The file is also run through node and git bash terminal. Uses a spotify API node
 
   NOTE: each command logs the command and searchItem to log.txt
 
-  4. Use do=what-it-says and no searchItem to re-run each command written to date, which has been logged in log.txt. 
+  4. Use do-what-it-says and no searchItem to re-run each command written to date, which has been logged in log.txt. 
     NOTE: running do-what-it-says re-logs each command to log.txt
     * example: https://github.com/JBloodBeardN/LIRIbot/blob/master/gifs/814c555944d432fdfc6f750e11a60ab9.gif
