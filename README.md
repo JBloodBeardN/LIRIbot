@@ -10,10 +10,10 @@ The file is also run through node and git bash terminal. Uses a spotify API node
 ### How to use
 1.use syntax "node liri command searchItem" to request that Liri Bot run an information search for the given search. Information is available for:
 
-  *Movies
-  *Songs
-  *Bands
-  *Musical Artists
+  * Movies
+  * Songs
+  * Bands
+  * Musical Artists
   
   1. Use movie-this and a movie title to search OMDB API for movie information
 
