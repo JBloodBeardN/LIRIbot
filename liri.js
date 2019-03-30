@@ -16,16 +16,18 @@ commandObject = {
 
         //    example input: `node liri.js concert-this <artist/band name here>`
 
+        artistORBandORSongORMovie = parameter;
+
 
          queryUrl = "https://rest.bandsintown.com/artists/" + parameter + "/events?app_id=codingbootcamp"
 
            axios.get(queryUrl).then(function(response){
         var objectOfVenues = [];
-        for (i=0;i<10;i++){
+        for (i=0;i<response.data.length;i++){
                 var venue = response.data[i].venue.name;
                 var city = response.data[i].venue.city;
-                var region = response.data[i].venue.city;
-                var country = response.data[i].venue.city;
+                var region = response.data[i].venue.region;
+                var country = response.data[i].venue.country;
                 var datetime = response.data[i].datetime;
                 var formatDate = moment(datetime, moment.ISO_8601).format("YYYY/MM/DD")
                 //      * Name of the venue; 
@@ -45,7 +47,7 @@ commandObject = {
         });
         
         //then log that you did something
-        fs.appendFile("log.txt", ", concert-this,"+artistORBandORSongORMovie, function (err) {
+        fs.appendFile("log.txt", ";concert-this,"+artistORBandORSongORMovie, function (err) {
 
             if (err) {
                 return console.log(err);
@@ -55,36 +57,34 @@ commandObject = {
 
 
     "spotify-this-song": function (parameter) {
-        console.log("spotify");
         // example input = `node liri.js spotify-this-song '<song name here>'
         // utilize the [node-spotify-api](https://www.npmjs.com/package/node-spotify-api) 
-        var songParameter = "";
         // default ace of base
         // if(artistORBandORSongORMovie === null){
         // artistORBandORSongORMovie = "Ace of Base"
         // }
         if(parameter=== undefined){
-            songParameter = "The Sign"
+            artistORBandORSongORMovie = "The Sign"
         } else {
-            songParameter = parameter;
+            artistORBandORSongORMovie = parameter;
         }
 
 
         spotify.search({ 
             type: 'track', 
-            query: '"'+songParameter+'"', 
+            query: '"'+artistORBandORSongORMovie+'"', 
             limit: 10,
 
         }).then(function(response) {
             var artists = [];
-
-            response.tracks.items[9].album.artists.forEach(function(element, index){
-                artists.push(response.tracks.items[9].album.artists[index].name)
+            
+            response.tracks.items[0].album.artists.forEach(function(element, index){
+                artists.push(response.tracks.items[0].album.artists[index].name)
             })
-            console.log("track name: "+response.tracks.items[9].name);
+            console.log("track name: "+response.tracks.items[0].name);
             console.log("artist : "+artists);
-            console.log("album name: "+response.tracks.items[9].album.name);
-            console.log("preview song here: "+response.tracks.items[9].preview_url);
+            console.log("album name: "+response.tracks.items[0].album.name);
+            console.log("preview song here: "+response.tracks.items[0].preview_url);
 
         }).catch(function(err) {
             console.log(err);
@@ -98,7 +98,7 @@ commandObject = {
 
 
         //then log that you did something
-        fs.appendFile("log.txt", ", spotify-this-song,"+artistORBandORSongORMovie, function(err){
+        fs.appendFile("log.txt", ";spotify-this-song,"+artistORBandORSongORMovie, function(err){
             if(err){
             return console.log(err);
             }
@@ -106,12 +106,11 @@ commandObject = {
     },
 
     "movie-this": function (parameter) {
-        console.log("movie-this");
+        artistORBandORSongORMovie = parameter;
         // example input: `node liri.js movie-this '<movie name here>'`
 
         //this is for adding default of mr. nobody
-        var extraNullMessage = ""
-        console.log(artistORBandORSongORMovie)
+        var extraNullMessage = "";
         if (artistORBandORSongORMovie === ""){
             artistORBandORSongORMovie = "Mr. Nobody"
         extraNullMessage = ["If you haven't watched 'Mr. Nobody,' then you should: <http://www.imdb.com/title/tt0485947/>","","It's on Netflix!"];
@@ -147,7 +146,7 @@ commandObject = {
 
 
         //then log that you did something
-        fs.appendFile("log.txt", "movie-this,"+artistORBandORSongORMovie, function(err){
+        fs.appendFile("log.txt", ";movie-this,"+artistORBandORSongORMovie, function(err){
 
             if(err){
             return console.log(err);
@@ -157,15 +156,13 @@ commandObject = {
     },
 
     "do-what-it-says": function () {
-        console.log("do what it says");
-
         // example input = `node liri.js do-what-it-says`
 
         // Using the `fs` Node package
 
 
 
-        fs.readFile("random.txt", "utf8", function (err, data) {
+        fs.readFile("log.txt", "utf8", function (err, data) {
             if (err) {
                 return console.log(err);
             }
@@ -173,8 +170,6 @@ commandObject = {
             fileArray.forEach(function(element){
                 var command = element.split(",")[0];
                 var parameter = element.split(",")[1];
-                console.log(command);
-                console.log(parameter);
                 commandObject[command](parameter);
             });
         });
